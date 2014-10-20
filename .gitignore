@@ -3,3 +3,5 @@
 .pydevproject
 *.pyc
 *.log
+*.log.*
+*.out
