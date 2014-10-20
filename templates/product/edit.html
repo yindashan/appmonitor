@@ -1,0 +1,24 @@
+<div class="common_margin_std" style="text-align:left;">
+	<form method="post" action="{% url product_edit product.id %}"  onsubmit="return validateCallback(this)">{% csrf_token %}
+		<table class="form_table font_style_std3">
+			<tr>
+				<td width="13%"><h4>添加产品</h4></td>
+				<td class="ralign_std"><button type="submit" id="submit_btn">保存</button><button onclick ="return httpRedirectAjax('{% url product_index %}')">取消</button></td>
+			</tr>
+			<tr>
+				<td><label>产品名称:</label></td>
+				<td>
+					<input name="product_name" size="30" class="required" value="{{ product.product_name }}"/>
+				</td>				
+			</tr>
+		</table>
+	</form>
+</div>
+
+<script language="JavaScript" type="text/javascript">
+//----------- start ---------------
+$(document).ready(function(){
+	 //校验
+	 $("form").validate();
+});
+</script>

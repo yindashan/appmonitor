@@ -1,0 +1,59 @@
+<style type="text/css">
+.textarea_std2{
+	border-collapse:collapse;
+	border: 1px solid #7F9DB9;
+	text-align:left;
+	width:600px;
+	min-height:100px;
+}
+.watch_comment{
+	margin:0;
+	color:black;
+	line-height:1.5em;
+}
+.watch_comment a{
+	color:#12c;
+}
+</style>
+<div class="common_margin_std">
+	<table class="form_table font_style_std3">
+		<tr>
+			<td style="vertical-align:top;"><b>检查结果说明:</b></td>
+			<td><pre class="watch_comment">{{ item.comment }}</pre></td>
+		</tr>
+		<tr>
+			<td><h4>基本信息</h4></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><label>执行时间:</label></td>
+			<td><input type="text" size="30" value="{{item.execute_time}}" readonly /></td>				
+		</tr>
+		<tr>
+			<td style="vertical-align:top;"><label>测试用例ID:</label></td>
+			<td><input type="text" size="30" value="{{ item.case_id }}" readonly /></td>	
+		</tr>
+		<tr>
+			<td style="vertical-align:top;"><label>规则:</label></td>
+			<td><input type="text" size="30" value="{{ item.rule }}" readonly /></td>	
+		</tr>
+		<tr>
+			<td style="vertical-align:top;"><label>检查结果是否正确:</label></td>
+			<td>
+				<input type="text" size="30" value="{{item.is_pass}}" readonly /></td>	
+			</td>
+		</tr>
+		<tr>
+			<td style="vertical-align:top;"><label>URL:</label></td>
+			<td><textarea class="textarea_std2" readonly>{{ item.url }}</textarea></td>		
+		</tr>
+		<tr>
+			<td style="vertical-align:top;"><label>测试用例说明:</label></td>
+			<td><textarea class="textarea_std2" readonly>{{ item.case_comment }}</textarea></td>
+		</tr>
+		<tr>
+			<td style="vertical-align:top;"><label>附加参数:</label></td>
+			<td><textarea class="textarea_std2" readonly>{{ item.params }}</textarea></td>		
+		</tr>
+	</table>
+</div>

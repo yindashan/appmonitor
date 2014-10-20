@@ -1,0 +1,53 @@
+<!-- content starts -->
+		{% if not chart_list and not combine_list %}
+		        <p>此节点没有对应的图表</p>
+		{% endif %}
+		<!-- chart_type:图表类型 0:'单数据源曲线图',1:'多数据源曲线图',2:'饼图',3:'柱形图' ,show_type:展示的时间区间 1:'4小时',2:'1天',3:'1个月',4:'1年' -->
+		<div class="row-fluid">
+			<!-- 单数据源图表 --->
+			{% for chart in chart_list %}
+			
+			<div class="box">
+				<div class="box-header well" data-original-title="">
+					<h2><i class="icon-list-alt"></i></h2>
+					<div class="box-icon">
+						<a href="#" class="btn btn-chart-search btn-round"><i class="icon-search"></i></a>
+						<a href="#" class="btn btn-precise-data btn-round"><i class="icon-road"></i></a>
+						<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+						<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+					</div>
+				</div>
+				<div class="box-content">
+              		<div class="center flotchart" style="height:300px" id="{{ chart.id }}" chart_type="0" host_ip="{{ chart.host_ip }}" 
+              		app_name="{{ chart.app_name }}"  monitor_item_id="{{ chart.monitor_item_id }}" show_type="{{ chart.show_type }}"
+              		desc="{{ chart.desc }}" warning_type="{{ chart.warning_type }}"  warning="{{ chart.warning }}"
+              		warning_min="{{ chart.warning_min }}" warning_max="{{ chart.warning_max }}" critical_type="{{ chart.critical_type }}"
+              		critical="{{ chart.critical }}" critical_min="{{ chart.critical_min }}" critical_max="{{ chart.critical_max }}"></div>            
+              	</div>
+			</div><!--/box-->
+			
+			{% endfor %}
+		</div> <!--/row-->
+						
+		<!-- 多数据源图表 --->
+		{% for chart in combine_list %}
+		
+			<div class="box">
+				<div class="box-header well" data-original-title="">
+					<h2><i class="icon-list-alt"></i></h2>
+					<div class="box-icon">
+						<a href="#" class="btn btn-chart-search btn-round"><i class="icon-search"></i></a>
+						<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+						<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+					</div>
+				</div>
+				<div class="box-content">
+              		<div class="center flotchart" style="height:300px" id="{{ chart.canvas_id }}"  
+              		chart_type="{{ chart.chart_type }}" show_type="{{ chart.show_type }}" desc="{{ chart.desc }}"
+              		chart_ids = "{{ chart.chart_ids }}" keys_desc="{{ chart.keys_desc }}" ></div>            
+              	</div>
+			</div><!--/box-->
+			
+		{% endfor %}
+
+<!-- content ends -->

@@ -1,0 +1,118 @@
+
+<!-- content starts -->	
+	<div>
+		<ul class="breadcrumb">
+			<li>
+				<a href="#">系统管理</a> <span class="divider">/</span>
+			</li>
+			<li>
+				<a href="#">应用项管理</a>
+			</li>
+		</ul>
+	</div>
+	
+	<div class="row-fluid sortable">
+			<div class="box span12">
+				<div class="box-header well" data-original-title>
+					<h2><i class="icon-edit"></i> 添加应用项</h2>
+				</div>
+				<div class="box-content">
+					<form class="form-horizontal" method="post" action="{% url appitem_add %}" onsubmit="return validateCallback(this);">
+						<fieldset>
+							<div class="control-group">
+								<label class="control-label">应用名称<span style="color:#f00">*</span></label>
+								<div class="controls">
+									<input class="input-xlarge required chrnum" type="text" name="app_name"/>
+									请使用英文字母、数字以及下划线，例:AMAP_SERVER,应用名长度不超过30个字符
+								</div>
+							</div>
+						
+						  <div class="control-group">
+							<label class="control-label">描述<span style="color:#f00">*</span></label>
+							
+							<div class="controls">
+							  <input class="input-xlarge required" type="text" name="desc"/>
+							</div>
+						  </div>
+						  <div class="control-group">
+							<label class="control-label">检查时间间隔</label>
+								<div class="controls">
+									  <label class="radio">
+										<input type="radio" name="check_interval" value="1" />
+										1分钟
+									  </label>
+									  
+									  <div style="clear:both"></div>
+									  
+									  <label class="radio">
+										<input type="radio" name="check_interval" value="5" checked />
+										5分钟
+									  </label>
+								</div>
+						  </div>
+						  
+						<div class="control-group">
+							<label class="control-label">最大重试次数</label>
+							<div class="controls">
+								  <label class="radio">
+									<input type="radio" name="max_check_attempts" value="1"/>
+									1次
+								  </label>
+								  <div style="clear:both"></div>
+								  
+								  <label class="radio">
+									<input type="radio" name="max_check_attempts" value="2" checked/>
+									2次
+								  </label>
+								  <div style="clear:both"></div>
+								  
+								  <label class="radio">
+									<input type="radio" name="max_check_attempts" value="3"/>
+									3次
+								  </label>
+							</div>
+						 </div>
+						 <div class="control-group">
+							<label class="control-label">IP地址列表<span style="color:#f00">*</span></label>
+							<div class="controls">
+								<textarea name="ip_list" class="required iplist textarea_std"></textarea>
+								IP地址列表，以逗号分隔,例:192.168.1.100,192.168.1.120
+							</div>
+						 </div>
+						 <div class="control-group">
+							<label class="control-label">邮件报警联系地址列表</label>
+								<div class="controls">
+									<textarea name="email_list" class="emaillist textarea_std"></textarea>
+								</div>
+						 </div>
+						 <div class="control-group">
+							<label class="control-label">报警短信联系列表</label>
+								<div class="controls">
+									<textarea name="mobile_list" class="mobilelist textarea_std"></textarea>
+								</div>
+						 </div>
+
+						  
+						
+						  <div class="form-actions">
+							<button type="submit" class="btn btn-primary">保存</button>
+							<button class="btn" onclick ="return httpRedirectAjax('{% url appitem_index %}')">取消</button>
+						  </div>
+						</fieldset>
+					  </form>
+				
+				</div>
+			</div><!--/span-->
+		
+		</div><!--/row-->
+<!-- content ends -->
+
+<script language="JavaScript" type="text/javascript">
+
+//----------- start ---------------
+$(document).ready(function(){
+	 //校验
+	 $("form").validate();
+
+});
+</script>

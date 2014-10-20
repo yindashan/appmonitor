@@ -1,0 +1,70 @@
+<style type="text/css">
+	tr.temp_std{
+		color:black;
+	}
+	tr.temp_std a{
+		color:#12c;
+	}
+</style>
+<div id="mytabs">
+  <ul>
+    <li><a href="#fragment-1"><span>任务执行情况</span></a></li>
+  </ul>
+  <div id="fragment-1">
+  	<div class="common_margin_std">
+		<table class="form_table font_style_std3">
+			<tr>
+				<td width="13%"><h4>查看任务执行情况</h4></td>
+				<td class="ralign_std"><button onclick ="return httpRedirectAjax('{% url checkresult_index %}')">返回</button></td>
+			</tr>
+			<tr>
+				<td><label>所属产品:</label></td>
+				<td><input type="text" size="30" value="{{task.product}}" readonly /></td>				
+			</tr>
+			<tr>
+				<td><label>创建时间:</label></td>
+				<td><input type="text" size="30" value="{{task.create_time}}" readonly /></td>				
+			</tr>
+			<tr>
+				<td><label>测试集ID:</label></td>
+				<td><input type="text" size="30" value="{{task.set_id}}" readonly /></td>	
+			</tr>
+			<tr>
+				<td><label>任务说明:</label></td>
+				<td>
+					<input type="text" size="30" value="{{task.comment}}" readonly /></td>	
+				</td>
+			</tr>
+			<tr>
+				<td><label>执行时间:</label></td>
+				<td>
+					<input type="text" size="30" value="{{task.execute_time}}" readonly /></td>	
+				</td>
+			</tr>
+			<tr>
+				<td><label>是否通过:</label></td>
+				<td>
+					<input type="text" size="30" value="{{task.is_pass}}" readonly /></td>	
+				</td>		
+			</tr>
+		</table>
+		<table class="form_table font_style_std3">
+			<tr><th>测试用例说明</th><th>是否通过</th><th>操作</th></tr>
+			{% for item in item_list %}
+				<tr class="temp_std">
+					<td>{{item.case_comment}}</td>
+					<td>{{item.is_pass}}</td>
+					<td>
+						<a href="{% url checkresult_watch item.id %}" onclick="return add_tab(this);" cid="{{item.id}}"><span>查看</span></a>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+  </div>
+</div>
+<script  language="JavaScript" type="text/javascript">
+$(document).ready(function(){
+	$("#mytabs").tabs();
+});
+</script>

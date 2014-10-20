@@ -1,0 +1,46 @@
+<table class="table table-striped table-bordered bootstrap-datatable datatable">
+		<thead>
+			<tr>
+				<th>所属应用</th>
+				<th>描述</th>
+				<th>类型</th>
+				<th width="150px">操作</th>
+			</tr>
+		</thead>   
+		<tbody>
+			{% for item in chart_list %}
+			<tr>
+				<td>{{ item.app_name }}</td>
+				<td>{{ item.desc }}</td>
+				<td>{{ item.type_str }}</td>
+				
+				<td class="center ">
+					<a class="btn btn-small btn-primary" href="{% url combinechart_edit item.id %}"  onclick="return executeMenu(this);">
+						<i class="icon-edit icon-white"></i>  
+						编辑                                            
+					</a>
+					<a class="btn btn-small btn-danger" href="{% url combinechart_delete item.id %}" onclick="return executeDelete(this);" title="您确定要删除该项吗?">
+						<i class="icon-trash icon-white"></i> 
+						删除
+					</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	
+	<!-- 展示记录数,上一页，下一页等等 -->
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="dataTables_info">显示从{{ chart_list.start_index }}到{{ chart_list.end_index }} 总共{{ chart_list.paginator.count }}条记录</div>
+		</div>
+		<div class="span12 center">
+			<div class="dataTables_paginate paging_bootstrap pagination">
+				<ul currPage="{{ chart_list.number }}" totalPage="{{ chart_list.paginator.num_pages }}" >
+					<li class="prev"><a href="{% url combinechart_search %}" onclick="return searchPageJump(this);">上一页</a></li>
+					<li><a href="#">{{ chart_list.number }}</a></li>
+					<li class="next"><a href="{% url combinechart_search %}" onclick="return searchPageJump(this);">下一页</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>

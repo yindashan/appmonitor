@@ -1,0 +1,73 @@
+<div class="page">
+	<div class="pageContent">
+		<div class="panelBar">
+			<span><a href="{% url servicegroup_add %}" title="添加服务集群" onclick="return executeMenu(this);">新增</a></span>
+			<span><a href="{% url servicegroup_selecteddelete %}" title="确实要删除这些记录吗?" onclick="return getIds(this)">批量删除</a></span>
+		</div>
+
+		<table width="100%">
+			<thead>
+				<tr>
+					<th width="3%">				
+						<input type="checkbox" name="checkbox_group" class="checkboxCtrl" onclick ="checkboxgroup(this)">				
+					</th>
+					<th width="5%">序号</th>
+					<th width="10%">产品</th>
+					<th width="20%">名称</th>
+					<th>备注</th>
+					<th width="8%">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for item in item_list %}
+					<tr target="sid_group" rel="{{ item.id }}">
+						<td>				
+							<input type="checkbox" name="checkbox" value="{{ item.id }}">	
+						</td>
+						<td>{{ item.id }}</td>
+						<td>{{ item.product.product_name }}</td>
+						<td>{{ item.name }}</td>
+						<td>{{ item.comment }}</td>
+						<td>
+							<a class="edit" href="{% url servicegroup_edit item.id %}"  onclick="return executeMenu(this)";><span>编辑</span></a>
+							<a class="delete" href="{% url servicegroup_delete item.id %}" title="您确定要删除该项吗？" onclick="return excuteDelete(this)"><span>删除</span></a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		
+		<div class="panelBar">
+			<div class="pages">
+				<span>
+					共{{ item_list.paginator.count }}条
+				</span>
+			</div>
+			
+			<div class="pagination">
+				<span class="first" onclick="pageJump(this, {{ item_list.number }}, {{item_list.paginator.num_pages}})">
+						首页
+				</span>
+
+				<span class="previous" onclick="pageJump(this, {{ item_list.number }}, {{item_list.paginator.num_pages}})">
+						上一页
+				</span>
+
+				<span>
+					{{ item_list.number }}
+				</span>
+
+				<span class="next" onclick="pageJump(this, {{ item_list.number }}, {{item_list.paginator.num_pages}})">
+						下一页
+				</span>
+
+				<span class="last" onclick="pageJump(this, {{ item_list.number }}, {{item_list.paginator.num_pages}})">
+						末页
+				</span>
+
+				<input class="textInput" type="text" value="" size="4" style="height:12px"/>
+				<button type="button" class="button" onclick="return pageJump(this)"><a href="{% url servicegroup_index %}">确定</a></button>
+			</div>
+		</div>
+	</div>	
+</div>

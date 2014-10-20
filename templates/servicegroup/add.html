@@ -1,0 +1,150 @@
+<style type="text/css">
+table.table_std2{
+	
+	border-collapse:collapse;
+	border: 1px solid #7F9DB9;
+	text-align:left;
+}
+.table_std2 th,.table_std2 td{
+	border: 1px solid #7F9DB9;
+	padding:5px;
+}
+#service_div{
+	padding-left:10px;
+	padding-bottom:20px;
+}
+.h4_std{
+	margin-bottom:15px;
+}
+</style>
+<div class="common_margin_std" style="text-align:left;">
+	<form method="post" action="{% url servicegroup_add %}"  onsubmit="return validateCallback2(this)">{% csrf_token %}
+		<table class="form_table font_style_std3">
+			<tr>
+				<td width="13%"><h4>添加服务集群</h4></td>
+				<td class="ralign_std"><button type="submit" id="submit_btn">保存</button><button onclick ="return httpRedirectAjax('{% url servicegroup_index %}')">取消</button></td>
+			</tr>
+			<tr>
+				<td><label>所属产品:</label></td>
+				<td>
+					<select name="product">
+						{% for product in product_list %}
+    						<option value="{{product.id}}">{{ product.product_name }}</option>
+						{% endfor %}
+					</select>
+				</td>				
+			</tr>
+			<tr>
+				<td><label>集群名称:</label></td>
+				<td><input type="text" size="30"  name="name" value="" class="required" /><span style="color:#f00">*</span></td>				
+			</tr>
+			<tr>
+				<td style="vertical-align:top;"><label>备注:</label></td>
+				<td style="vertical-align:top;"><textarea name="comment" cols="28" rows="5"/></td>		
+			</tr>
+		</table>
+		<h4 class="font_style_std3 h4_std">将以下测试集作用于服务集群:</h4>
+		<div>
+			{% for item in caseset_list %}
+				<input type="checkbox" value="{{item.id}}" name="caseset" />{{item.name}}
+			{% endfor %}
+		</div>
+	</form>
+
+	<h4 class="font_style_std3 h4_std">已包含服务地址:</h4>
+	<table class="table_std2 font_style_std3" id="exist_item">
+		<tr>
+			<th>机房</th>
+			<th>IP</th>
+			<th>端口</th>
+			<th>是否使用代理</th>
+			<th>操作</th>
+		</tr>
+	</table>
+	<input type="button" value="添加" id="add_service"/>
+	<!-- 多提供一次保存按钮，避免用户遗漏 -->
+	<table class="form_table font_style_std3">
+		<tr>
+			<td></td>
+			<td class="ralign_std"><button type="submit" id="submit_btn2">保存</button><button onclick ="return httpRedirectAjax('{% url servicegroup_index %}')">取消</button></td>
+		</tr>
+	</table>
+	
+	<div style="display:none" id="service_div">
+		<form>
+			<table class="form_table font_style_std3">
+				<tr>
+					<td width="18%"><h4>添加服务套接字</h4></td>
+					<td class="ralign_std"><button id="service_div_save">保存</button><button id="service_div_cancel">取消</button></td>
+				</tr>
+				<tr>
+					<td><label>机房:</label></td>
+					<td>
+						<select id="idc">
+	                        {% for key,value in idc_dict.items %}
+	                            <option value="{{ key }}">{{ value }}</option>
+	                        {% endfor %}
+	                    </select>
+					</td>				
+				</tr>
+				<tr>
+					<td><label>IP:</label></td>
+					<td><input id="ip" class="required ip" /></td>		
+				</tr>
+				<tr>
+					<td><label>端口:</label></td>
+					<td> <input size="5" id="port" class="required digits" />
+					</td>				
+				</tr>
+				<tr>
+					<td><label>是否使用代理:</label></td>
+					<td>
+						<input type="checkbox" id="is_use_proxy" checked/>
+					</td>				
+				</tr>
+			</table>
+		</form>
+	</div>
+
+</div>
+<script language="JavaScript" type="text/javascript">
+
+//----------- start ---------------
+$(document).ready(function(){
+	 //校验
+	 $("form").validate();
+	 $("tr.active_data input[type='button']").click(function(){
+	 	$(this).parent().parent().remove();
+	 });
+	 //点击添加按钮将弹出浮动层，让用户填写测试用例
+	 $("#add_service").click(function(){
+	 	//清除表单校验信息
+	    $("label.error").remove();
+		$.blockUI({ 
+			message: $("#service_div"),
+			css: {
+		            left: ($(window).width() - 600) /2 + 'px',
+		            top:'10%',
+		            width: '600px',
+		            cursor:'default',
+				} 
+		});
+	 });
+	 //点击添加测试用例中的取消按钮
+	$('#service_div_cancel').click(function(){
+		// 对于正在编辑的记录，把相应的标记去掉
+		$("tr.curr").removeClass('curr');
+		//相应字段清空
+		$("#service_div input,#service_div textarea").val("");
+		$.unblockUI();	 	
+	});
+	//点击添加测试用例中的保存按钮
+	$('#service_div_save').click(function(){
+		add_service_item();
+	});
+	// 第二个提交按钮点击将触发第一个提交按钮
+	$('#submit_btn2').click(function(){
+		$("#submit_btn").click();
+	});
+});
+</script>
